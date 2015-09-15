@@ -1,4 +1,4 @@
-CFLAGS += -Wall -Wextra -O3
+override CFLAGS += -Wall -Wextra -O3
 
 SRCS=$(wildcard src/*.c) $(wildcard src/md5/*.c)
 DEPS=$(wildcard src/*.h) $(wildcard src/md5/*.h) $(wildcard include/*.h)
