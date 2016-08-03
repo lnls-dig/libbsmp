@@ -1,5 +1,6 @@
 .autotools
 .cproject
+.gradle
 .project
 .settings/
 autom4te.cache/

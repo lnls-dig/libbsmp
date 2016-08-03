@@ -1,0 +1,13 @@
+apply plugin: 'c'
+
+model {
+    components {
+        bsmp(NativeLibrarySpec) {
+            sources {
+                c {
+                    exportedHeaders.srcDir 'include'
+                }
+            }
+        }
+    }
+}
