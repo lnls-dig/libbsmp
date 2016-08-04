@@ -2,8 +2,8 @@
 #define BSMP_SERVER_PRIV_H
 
 #include <stdint.h>
-#include "bsmp.h"
-#include "server.h"
+#include "bsmp/bsmp.h"
+#include "bsmp/server.h"
 
 #define VERSION     2
 #define SUBVERSION  10
