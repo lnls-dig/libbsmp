@@ -1,17 +1,19 @@
 override CFLAGS += -Wall -Wextra -O3
 
-SRCS=$(wildcard src/*.c) $(wildcard src/md5/*.c)
-DEPS=$(wildcard src/*.h) $(wildcard src/md5/*.h) $(wildcard include/*.h)
+SRCS=$(wildcard src/bsmp/c/*.c) $(wildcard src/bsmp/c/md5/*.c)
+DEPS=$(wildcard src/bsmp/c/*.h) $(wildcard src/bsmp/c/md5/*.h) $(wildcard include/bsmp/*.h)
 OBJS=$(SRCS:.c=.o)
 
 LIBS = libbsmp.a libbsmp.so
-HDRS = include/bsmp.h include/server.h include/client.h
+HDRS = include/bsmp/bsmp.h include/bsmp/server.h include/bsmp/client.h
 INSTALL ?= /usr/bin/install
 INSTALL_FLAGS = -c -m 644
 LDCONFIG ?= /sbin/ldconfig
 PREFIX ?= /usr
 LDIR = $(PREFIX)/lib
 IDIR = $(PREFIX)/include/bsmp
+
+override CFLAGS += -I include/
 
 .phony: all install clean distclean
 

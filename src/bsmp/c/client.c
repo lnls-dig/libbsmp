@@ -1,5 +1,5 @@
 #include "bsmp_priv.h"
-#include "../include/client.h"
+#include "bsmp/client.h"
 
 #include <stdio.h>
 #include <stdlib.h>

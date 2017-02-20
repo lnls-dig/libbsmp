@@ -1,4 +1,4 @@
-#include "../include/server.h"
+#include "bsmp/server.h"
 #include "server_priv.h"
 #include "bsmp_priv.h"
 
