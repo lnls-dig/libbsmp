@@ -12,6 +12,7 @@ LDCONFIG ?= /sbin/ldconfig
 PREFIX ?= /usr
 LDIR = $(PREFIX)/lib
 IDIR = $(PREFIX)/include/bsmp
+SOVERSION = 1
 
 override CFLAGS += -I include/
 
@@ -29,7 +30,7 @@ libbsmp.a: $(OBJS)
 	$(AR) rcs $@ $(OBJS)
 
 libbsmp.so: $(OBJS)
-	$(CC) -shared -Wl,-soname,$@ -o $@ $(OBJS)
+	$(CC) -shared -Wl,-soname,$@.$(SOVERSION) -o $@ $(OBJS)
 
 %.o: %.c $(DEPS)
 	$(CC) -c -fPIC -o $@ $< $(CFLAGS)
