@@ -4,7 +4,8 @@ SRCS=$(wildcard src/bsmp/c/*.c) $(wildcard src/bsmp/c/md5/*.c)
 DEPS=$(wildcard src/bsmp/c/*.h) $(wildcard src/bsmp/c/md5/*.h) $(wildcard include/bsmp/*.h)
 OBJS=$(SRCS:.c=.o)
 
-LIBS = libbsmp.a libbsmp.so
+LN = ln
+
 HDRS = include/bsmp/bsmp.h include/bsmp/server.h include/bsmp/client.h
 INSTALL ?= /usr/bin/install
 INSTALL_FLAGS = -c -m 644
@@ -20,8 +21,8 @@ override CFLAGS += -I include/
 
 all: libbsmp.a libbsmp.so
 
-install: $(LIBS) $(HDRS)
-	$(INSTALL) $(INSTALL_FLAGS) $(LIBS) $(LDIR)
+install: libbsmp.a libbsmp.so $(HDRS)
+	$(INSTALL) $(INSTALL_FLAGS) libbsmp.a libbsmp.so.$(SOVERSION) libbsmp.so $(LDIR)
 	$(LDCONFIG) -n $(LDIR)
 	mkdir -p $(IDIR)
 	$(INSTALL) $(INSTALL_FLAGS) $(HDRS) $(IDIR)
@@ -30,16 +31,17 @@ libbsmp.a: $(OBJS)
 	$(AR) rcs $@ $(OBJS)
 
 libbsmp.so: $(OBJS)
-	$(CC) -shared -Wl,-soname,$@.$(SOVERSION) -o $@ $(OBJS)
+	$(CC) -shared -Wl,-soname,$@.$(SOVERSION) -o $@.$(SOVERSION) $(OBJS)
+	$(LN) -s $@.$(SOVERSION) $@
 
 %.o: %.c $(DEPS)
 	$(CC) -c -fPIC -o $@ $< $(CFLAGS)
 
 clean:
-	@- $(RM) libbsmp.a libbsmp.so $(OBJS)
+	@- $(RM) libbsmp.a libbsmp.so.$(SOVERSION) libbsmp.so $(OBJS)
 
 uninstall:
-	$(RM) $(LDIR)/libbsmp.a $(LDIR)/libbsmp.so
+	$(RM) $(LDIR)/libbsmp.a $(LDIR)/libbsmp.so $(LDIR)/libbsmp.so.$(SOVERSION)
 	$(RM) -r $(IDIR)
 
 distclean: clean
